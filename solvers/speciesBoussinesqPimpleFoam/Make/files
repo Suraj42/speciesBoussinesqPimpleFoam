@@ -1,0 +1,3 @@
+speciesBoussinesqPimpleFoam.C
+
+EXE = $(FOAM_APPBIN)/speciesBoussinesqPimpleFoam
