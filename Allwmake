@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# echo "making speciesBoussinesqPimpleFoam solver"
+# cd solver/speciesBoussinesqPimpleFoam  && wclean && cd ../../
+# cd solver/speciesBoussinesqPimpleFoam  && wmake libso && cd ../../
+
+# echo "making speciesLaplacianFoam solver"
+# cd solver/speciesLaplacianFoam  && wclean && cd ../../
+# cd solver/speciesLaplacianFoam  && wmake libso && cd ../../
+
+# echo "making function objects"
+# cd solver/speciesLaplacianFoam  && wclean && cd ../../
+# cd solver/speciesLaplacianFoam  && wmake libso && cd ../../
+
+cd ${0%/*} || exit 1    # run from this directory
+
+# Option for Visual Studio Code Bindings for OpenFOAM 
+# https://openfoamwiki.net/index.php/HowTo_Use_OpenFOAM_with_Visual_Studio_Code
+# Usage, if you have the configuration from the above link: ./Allwmake -with-bear
+# otherwise just call ./Allwmake it will do nothing.
+WITH_BEAR=$1
+
+# Link files in src
+wmakeLnInclude -f src
+
+# Compile function objects
+wmake all $WITH_BEAR src/functionObjects
+
+# Compile solvers
+wmake $WITH_BEAR all solvers
+
+# Compile utilities
+#wmake $WITH_BEAR all utilities
+
+# Compile petscMumps solver
+# ./src/fvPatchFields/implicitFreeSurfacePressure/solvers/freeSurfacePetsc/Allwmake
+
+# ----------------------------------------------------------------- end-of-file
