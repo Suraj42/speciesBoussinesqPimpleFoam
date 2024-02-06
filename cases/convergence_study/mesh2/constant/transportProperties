@@ -1,0 +1,49 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+transportModel  Newtonian;
+
+// units: kilogram, meter, second, kelvin, mol, ampere, candela
+
+// kinematic viscosity of air (following Boussinesq approximation)
+nu nu [ 0 2 -1 0 0 0 0 ]        1.50e-05;
+
+// diffusion coefficient of ethanol in air 
+// (excel: D_Eth_Air in m^2/s, Literaturwert at 25degree Celsius, 101.325kPa)
+// https://doi.org/10.1016/j.applthermaleng.2014.08.009 
+D D [ 0 2 -1 0 0 0 0 ]          1.32e-05;
+
+// saturation concentration of vapor in air 
+Cs Cs [ 0 -3 0 0 1 0 0 ]       0.9800862586968713;// 0.92;
+
+// rho_0: density of pure air
+// in the excel sheet: Dichte reine Luft 1158.75 g/m^3
+rho_0 rho_0 [ 1 -3 0 0 0 0 0 ]  1.15875;    
+
+// Molar mass difference between ethanol and pure air, 0.046 kg/mol − 0.028 kg/mol
+dMolarMass dMolarMass [ 1 0 0 0 -1 0 0 ] 0.018;
+
+// drho: slope of the density model from eq (4), Dollet and Boulogne, 2017
+// the slope coefficent drho is defined by
+//
+//      drho := rho_0 - rho_s
+//
+// rho_s: density ethanol saturated air (excel Dichte Ethanol gesättigte Luft 1177.1 g/m^3)
+// rho_0: density pure air (excel: Dichte reine Luft 1158.75 g/m^3)
+drho drho [ 1 -3 0 0 0 0 0 ]     -0.042083804; //-0.015740; // negative as rho_s > rho_0
+
+// ************************************************************************* //

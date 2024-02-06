@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#----------------------------------Settings------------------------------
+#execute cases (1 or 0)
+executeCases=1
+
+#------------------------------------------------------------------------
+
+case=(1 2 3)
+
+echo ""
+echo "Running ..."
+
+caseID=0
+for caseRes in "${case[@]}"
+do
+
+    caseName="mesh$caseRes"
+    echo $caseName
+
+    # execute case
+    if [ $executeCases = 1 ]; then
+         (cd $caseName && ./Allrun &)
+    fi
+    ((caseID++))
+
+done
