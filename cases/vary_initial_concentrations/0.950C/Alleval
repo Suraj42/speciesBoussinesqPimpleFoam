@@ -1,0 +1,9 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+
+#mpirun -n 8 extractMassFlux -parallel -fieldName "T"
+mpirun -n 64 extractMassFlux -parallel -fieldName "C"
+#extractMassFlux -fieldName "C"
+#------------------------------------------------------------------------------

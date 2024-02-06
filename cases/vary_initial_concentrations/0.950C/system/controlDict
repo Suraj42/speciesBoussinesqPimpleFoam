@@ -1,0 +1,85 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+libs
+(
+  "libinitialiseFieldFunctionObject.so"
+  "libevaluateFlux_lowHFunctionObject.so"
+  "libinitExpFieldFunctionObject.so"
+);
+
+application     buoyantPimpleFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         25;
+
+deltaT          1e-3;
+
+writeControl    timeStep;
+
+writeInterval   100;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  16;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   16;
+
+runTimeModifiable true;
+
+adjustTimeStep  no;
+
+maxDeltaT       1e-2;
+
+maxCo           0.5;
+
+trapFpe    1;
+
+functions
+{
+
+   // initialiseField
+   //  {
+   //    type initialiseField;
+   //    //outputControl     outputTime;
+   //  }
+   initExpField
+    {
+      type initExpField;
+      //outputControl     outputTime;
+    }
+    evaluateFlux_lowH
+    {
+      type evaluateFlux_lowH;
+      //outputControl     outputTime;
+    }
+
+
+
+}
+// ************************************************************************* //
